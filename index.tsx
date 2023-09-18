@@ -5,6 +5,7 @@ import Layout from "./Layout"
 import MovieList from "./MovieList"
 import NewMovie from "./NewMovie"
 import Movie from "./Movie"
+
 const movies = [
   { title: "Inception", year: 2010 },
   { title: "The dark Knight", year: 2009 },
@@ -14,7 +15,7 @@ const movies = [
 const app = new Elysia()
 app.use(html())
 
-app.get("/", ({ html }) =>
+app.get("/movies", ({ html }) =>
   html(
     <Layout>
       <MovieList movies={movies} />
