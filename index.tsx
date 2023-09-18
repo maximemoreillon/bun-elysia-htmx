@@ -17,24 +17,29 @@ app.use(html())
 app.get("/", ({ html }) =>
   html(
     <Layout>
-      <MovieList {movies}/>
+      <MovieList movies={movies} />
       <h2>New movie</h2>
       <NewMovie />
     </Layout>
   )
 )
 
-app.post("/movies", ({body}: any) => {
+app.post("/movies", ({ body }: any) => {
   const newMovie = body
   movies.push(newMovie)
-  return <Movie {...newMovie} id={movies.length-1}/>
+  return <Movie {...newMovie} id={movies.length - 1} />
 })
 
-app.delete("/movies/:id", ({params}: any) => {
+app.put("/movies/:id", ({ body, params }: any) => {
+  const id = Number(params.id)
+  movies[id] = { ...movies[id], ...body }
+  return <Movie movie={movies[id]} id={id} />
+})
+
+app.delete("/movies/:id", ({ params }: any) => {
   movies.splice(params.id, 1)
   return null
 })
-
 
 app.listen(8080, () => {
   console.log(`[Elysia] Listening on port 8080`)

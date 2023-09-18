@@ -2,14 +2,21 @@ import * as elements from "typed-html"
 
 export default ({ title, year, id }: any) => (
   <li>
-    <span>{title}</span>
-    <span>({year})</span>
-    <button
-      hx-delete={`/movies/${id}`}
-      hx-target="closest li"
-      hx-swap="outerHTML"
-    >
-      {id}
-    </button>
+    <form hx-put={`/movies/${id}`} hx-target="closest li" hx-swap="outerHTML">
+      <label>Title</label>
+      <input type="text" name="title" value={title} />
+
+      <label>Year</label>
+
+      <input type="number" name="year" value={year} />
+      <button type="submit">Update</button>
+      <button
+        hx-delete={`/movies/${id}`}
+        hx-target="closest li"
+        hx-swap="outerHTML"
+      >
+        Delete
+      </button>
+    </form>
   </li>
 )
