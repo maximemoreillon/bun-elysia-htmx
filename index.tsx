@@ -3,6 +3,7 @@ import { html } from "@elysiajs/html"
 import * as elements from "typed-html"
 import Layout from "./Layout"
 import MovieList from "./MovieList"
+import MovieEdit from "./MovieEdit"
 import NewMovie from "./NewMovie"
 import Movie from "./Movie"
 
@@ -15,6 +16,12 @@ const movies = [
 const app = new Elysia()
 app.use(html())
 
+app.post("/movies", ({ body }: any) => {
+  const newMovie = body
+  movies.push(newMovie)
+  return <Movie {...newMovie} id={movies.length - 1} />
+})
+
 app.get("/movies", ({ html }) =>
   html(
     <Layout>
@@ -24,17 +31,20 @@ app.get("/movies", ({ html }) =>
     </Layout>
   )
 )
+app.get("/movies/:id", ({ params }) => {
+  const id = Number(params.id)
+  return <Movie title={movies[id].title} year={movies[id].year} id={id} />
+})
 
-app.post("/movies", ({ body }: any) => {
-  const newMovie = body
-  movies.push(newMovie)
-  return <Movie {...newMovie} id={movies.length - 1} />
+app.get("/movies/:id/edit", ({ params }) => {
+  const id = Number(params.id)
+  return <MovieEdit title={movies[id].title} year={movies[id].year} id={id} />
 })
 
 app.put("/movies/:id", ({ body, params }: any) => {
   const id = Number(params.id)
   movies[id] = { ...movies[id], ...body }
-  return <Movie movie={movies[id]} id={id} />
+  return <Movie title={movies[id].title} year={movies[id].year} id={id} />
 })
 
 app.delete("/movies/:id", ({ params }: any) => {
