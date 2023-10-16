@@ -22,7 +22,7 @@ app.post("/movies", ({ body }: any) => {
   return <Movie {...newMovie} id={movies.length - 1} />
 })
 
-app.get("/movies", ({ html }) =>
+app.get("/movies", ({ html }: any) =>
   html(
     <Layout>
       <MovieList movies={movies} />
