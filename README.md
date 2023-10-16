@@ -1,4 +1,6 @@
-# bun-elysia-htmx
+# Bun + Elysia + HTMX
+
+This is sample code for a simple app built using Bun, Elysia and HTMX
 
 To install dependencies:
 
